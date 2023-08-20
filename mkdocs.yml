@@ -1,0 +1,52 @@
+site_name: Veloduff Documentation 
+copyright: Apache License - Mark Duffield 2023
+repo_url: https://github.com/veloduff/deploy-secure-nodejs-app 
+repo_name: veloduff/deploy-secure-nodejs-app
+nav:
+  - "Launch a secure Node.js dev environment": 
+    - 'index.md'
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+plugins:
+  - search
+theme:
+  logo: assets/bicycle-solid_veloduff.png
+  favicon: assets/bicycle-solid_veloduff.png
+  icon:
+    repo: fontawesome/brands/github
+  name: material
+  custom_dir: docs/overrides
+  features:
+    - navigation.path
+    - navigation.indexes
+    - content.code.copy
+  font:
+    text: Roboto
+    code: Roboto Mono
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: green 
+      accent: green
+      scheme: default
+      toggle:
+        icon: material/weather-night 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: green
+      accent: green
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+
+
