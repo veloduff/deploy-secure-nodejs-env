@@ -8,13 +8,13 @@ The environment **should** not cost more then $6/month, and will probably be aro
 
 ## Documentation
 
-I have documented the entire process in detail, found here:  [Deploy a secure Node.js app in a dev environment](https://veloduff.github.io/deploy-secure-nodejs-app/). That said, I have also provided a setup command that creates the files and directories needed to launch the environment. The command is `setupBeanstalk.py` and I give an example run below. If you are familiar with AWS Elastic Beanstalk, you may be able to skip steps in the documentation, but highly encourage you to at least read the process to understand what is being done.
+I have documented the entire process in detail, found here:  [Deploy a secure Node.js app in a dev environment](https://veloduff.github.io/deploy-secure-nodejs-env/). That said, I have also provided a setup command that creates the files and directories needed to launch the environment. The command is `setupBeanstalk.py` and I give an example run below. If you are familiar with AWS Elastic Beanstalk, you may be able to skip steps in the documentation, but highly encourage you to at least read the process to understand what is being done.
 
 ## Node.js application
 
 It is required that you have a Node.js application already, and the application is using https at the application level. I have provided an example application: `session-with-https.js`. 
 
-**NOTE**: As the certificate files have not been created yet, you will not be able to run the application until you have run the setup command also (steps below), or you have gone through the steps in the [Documentation](https://veloduff.github.io/deploy-secure-nodejs-app/).
+**NOTE**: As the certificate files have not been created yet, you will not be able to run the application until you have run the setup command also (steps below), or you have gone through the steps in the [Documentation](https://veloduff.github.io/deploy-secure-nodejs-env/).
 
 Application setup (example based on provided application):
 ```bash
@@ -37,19 +37,19 @@ Now create (cut-n-paste) the application `app.js` using the `session-with-https.
 
 To use the setup command `setupBeanstalk.py`, you can clone the repo, but do not clone it in the same directory as the Node.js app. 
 
-There are no dependencies for running the setup command, but you should be familiar with the files and directories that are created (in the output below and the [Documentation](https://veloduff.github.io/deploy-secure-nodejs-app/)). The command is **run at the root of the Node.js project directory**, and has one required argument: the location of the SSL certificates directory (which you provide).
+There are no dependencies for running the setup command, but you should be familiar with the files and directories that are created (in the output below and the [Documentation](https://veloduff.github.io/deploy-secure-nodejs-env/)). The command is **run at the root of the Node.js project directory**, and has one required argument: the location of the SSL certificates directory (which you provide).
 
 There a few prompts for the commands:
 
 1. For the `-d` parameter, you will be asked if you are sure that this is the location you want to use. As this directory should not be publicly accessible (i.e., not on GitHUb), it is worth double checking it is in a secure location.
 1. You will also be prompted for the location of both the `.gitignore` and `.ebignore` files.
 
-The output below shows which files and directories are being created. Each of these is described in detail in the [Documentation](https://veloduff.github.io/deploy-secure-nodejs-app/).
+The output below shows which files and directories are being created. Each of these is described in detail in the [Documentation](https://veloduff.github.io/deploy-secure-nodejs-env/).
 
 Here are the steps to clone and run the setup command. You will need to verify that the application can run locally before deploying.
 
 ```bash
-[~/repos]$ git clone https://github.com/veloduff/deploy-secure-nodejs-app 
+[~/repos]$ git clone https://github.com/veloduff/deploy-secure-nodejs-env
 [~/repos]$ cd app-testing 
 [~/repos/app-testing]$ ../deploy-secure-nodejs-app/setupBeanstalk.py -d .certificates
 
