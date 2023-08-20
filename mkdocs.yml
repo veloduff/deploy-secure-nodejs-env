@@ -1,7 +1,7 @@
 site_name: Veloduff Documentation 
 copyright: Apache License - Mark Duffield 2023
-repo_url: https://github.com/veloduff/deploy-secure-nodejs-app 
-repo_name: veloduff/deploy-secure-nodejs-app
+repo_url: https://github.com/veloduff/deploy-secure-nodejs-env
+repo_name: veloduff/deploy-secure-nodejs-env
 nav:
   - "Launch a secure Node.js dev environment": 
     - 'index.md'
