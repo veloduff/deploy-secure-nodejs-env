@@ -49,16 +49,26 @@ _SSL_APP_CERT_INFO = """
     content: |
 """
 
+## This includes Managed Updates, and staticfiles
+# _OPTIONS_FILE_TEMPLATE = """
+# option_settings:
+#   aws:elasticbeanstalk:environment:proxy:staticfiles:
+#     /public: /public
+#   aws:elasticbeanstalk:managedactions:
+#     ManagedActionsEnabled: true
+#     PreferredStartTime: "Mon:10:00"
+#   aws:elasticbeanstalk:managedactions:platformupdate:
+#     UpdateLevel: patch
+#     InstanceRefreshEnabled: true
+#   aws:elasticbeanstalk:application:environment:
+#     PORT: 5000
+#     PKEY_PASSPHRASE: '{0}'
+#     NODE_ENV: 'production'
+# """
+
+
 _OPTIONS_FILE_TEMPLATE = """
 option_settings:
-  aws:elasticbeanstalk:environment:proxy:staticfiles:
-    /public: /public
-  aws:elasticbeanstalk:managedactions:
-    ManagedActionsEnabled: true
-    PreferredStartTime: "Mon:10:00"
-  aws:elasticbeanstalk:managedactions:platformupdate:
-    UpdateLevel: patch
-    InstanceRefreshEnabled: true
   aws:elasticbeanstalk:application:environment:
     PORT: 5000
     PKEY_PASSPHRASE: '{0}'

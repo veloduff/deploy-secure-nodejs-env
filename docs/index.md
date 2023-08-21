@@ -636,7 +636,7 @@ For just general tips for launching a Node.js application on Beanstalk, but not 
 
 To add **Managed updates** and to enable access to static files in the `/public` directory, add this to `.ebextensions/options.config`: 
 
-```
+```yaml
 option_settings:
   aws:elasticbeanstalk:managedactions:
     ManagedActionsEnabled: true
