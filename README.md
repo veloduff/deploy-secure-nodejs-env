@@ -10,7 +10,20 @@ The environment **should** not cost more then $6/month, and will probably be aro
 
 Below, I provide the steps needed to launch the environment using a setup command (`setupBeanstalk.py`). Additionally, I have documented the entire process in detail: [Deploy a secure Node.js app in a dev environment](https://veloduff.github.io/deploy-secure-nodejs-env/). If you are familiar with AWS Elastic Beanstalk, you may be able to skip steps in the documentation, but you should at least read the documentation to understand what is being done.
 
-## Node.js application
+## Steps
+
+
+1. Initialize the node app, and install dependencies:
+   ```bash
+   $ npm init es6 -y
+   $ npm i express express-session dotenv body-parser
+   ```
+1. Create the application and test locally
+1. Run the setup script 
+1. Run `eb init`
+1. Run `eb create`
+
+### Node.js application
 
 It is required that you have a Node.js application, and the application is using https at the application level. I have provided an example: `session-with-https.js`. 
 
@@ -33,7 +46,7 @@ Now create (cut-n-paste) the application `app.js` using the `session-with-https.
 └── package.json
 ```
 
-## Setup command usage
+### Run the setup command 
 
 To use the setup command `setupBeanstalk.py`, you can clone the repo, but do not clone it in the same directory as the Node.js app. 
 
