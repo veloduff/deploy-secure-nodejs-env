@@ -602,25 +602,25 @@ Once the deployment is finished you can go to the Elastic Beanstalk dashboard an
 
 When viewing in your browser, it should not matter if you use `http://` or `https://` for the url, you should be redirected to the https page. As we are using a self-signed certificate, you will see a warning that looks like this:
 
-![Cert warning](_images/eb_launch_cert_warning.png)
+![Cert warning](https://raw.githubusercontent.com/veloduff/deploy-secure-nodejs-env/main/_images/eb_launch_cert_warning.png)
 
 Click on "Advanced" and then click on the message that says something similar to this "Proceed to myEnvOnEb.eba-srwf23ds.us-west-2.elasticbeanstalk.com (unsafe)".
 
 You should see your app running on https, and you can check the certificate by clicking on the "Not Secure" button next to the URL.
 
-![Final result](_images/eb_final_result.png)
+![Final result](https://raw.githubusercontent.com/veloduff/deploy-secure-nodejs-env/main/_images/eb_final_result.png)
 
 #### Check that the session is Secure and using HttpOnly
 
 Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools". And then click on the "Application" tab, and in the "Storage" section, you should see "Cookies" and under that you should see the cookie that was set by the Node.js application. Both "HttpOnly" and "Secure" should be checked:
 
-![View cookie](_images/cookie_status.png)
+![View cookie](https://raw.githubusercontent.com/veloduff/deploy-secure-nodejs-env/main/_images/cookie_status.png)
 
 ### Remove and reset
 
 You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and instances) with the CLI, use `eb list` to show your environments, and `eb terminate` to remove them:
 
-[~/repos/app-testing]$ eb terminate <env_name>
+`[~/repos/app-testing]$ eb terminate <env_name>`
 
 If you need to reset your environment, you can remove all the files and directories that were created by the setup command:
 
