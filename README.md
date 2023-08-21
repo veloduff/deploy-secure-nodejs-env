@@ -12,16 +12,19 @@ Below, I provide the steps needed to launch the environment using a setup comman
 
 ## Steps
 
+Here is an overview of the steps:
 
 1. Initialize the node app, and install dependencies:
    ```bash
    $ npm init es6 -y
    $ npm i express express-session dotenv body-parser
    ```
-1. Create the application and test locally
+1. Create the application 
+1. Verify the application can run locally
 1. Run the setup script 
-1. Run `eb init`
-1. Run `eb create`
+1. Deploy:
+   1. Run `eb init`
+   1. Run `eb create`
 
 ### Node.js application
 
@@ -135,7 +138,7 @@ You should see your app running on https, and you can check the certificate by c
 
 <img src="_images/eb_final_result.png" width=750px alt="Final result">
 
-#### Check that the session is Secure and using HttpOnly
+### Check that the session is Secure and using HttpOnly
 
 Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools". And then click on the "Application" tab, and in the "Storage" section, you should see "Cookies" and under that you should see the cookie that was set by the Node.js application. Both "HttpOnly" and "Secure" should be checked:
 
