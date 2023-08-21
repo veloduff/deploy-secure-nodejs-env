@@ -6,9 +6,9 @@ hide:
 
 # Deploy a secure Node.js app in a dev environment 
 
-There are several options for launching a Node.js dev environment for web applications. For this workshop, I'll be using AWS Elastic Beanstalk. The security and knowing what region my data is in, are enough reasons to choose Beanstalk. That said, there are some extra steps that we'll have to take to launch an inexpensive dev environment on Beanstalk. My goal is to keep cost to nothing, or less than $5/month. You can also think about using Amplify, but this workshop is using Node.js without React. 
+There are several options for launching a Node.js dev environment for web applications. For this guide, I'll be using AWS Elastic Beanstalk. The security and knowing what region my data is in, are enough reasons to choose Beanstalk. That said, there are some extra steps that we'll have to take to launch an inexpensive dev environment on Beanstalk. My goal is to keep cost to nothing, or less than $5/month. You can also think about using Amplify, but this guide is using Node.js without React. 
 
-This workshop illustrates the process of launching a secure Node.js application environment, while also minimizing cost (but it is not intended for production). The environment **should** not cost more then $6/month, and will probably be around $3.50/month. Please ensure that you using an instance that will meet your cost requirements.
+This guide illustrates the process of launching a secure Node.js application environment, while also minimizing cost (but it is not intended for production). The environment **should** not cost more then $6/month, and will probably be around $3.50/month. Please ensure that you using an instance that will meet your cost requirements.
 
 ## Security in mind 
 
