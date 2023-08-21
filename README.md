@@ -1,4 +1,4 @@
-# Launch a secure Node.js dev environment
+# Deploy a secure Node.js dev environment
 
 This repo (and guide) illustrate the process of launching a secure Node.js application environment, while also minimizing cost. As production features (e.g., Load Balancer, backups, managed updates) are not used, this environment is intended to be used for development purposes. To minimize cost, a single instance (no Load Balancer) Beanstalk environment will be used running on a spot instance. 
 
@@ -147,7 +147,7 @@ Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools
 
 <img src="_images/cookie_status.png" width=750px alt="View cookie">
 
-### Clean and reset
+### Remove and reset
 
 You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and instances) with the CLI, use `eb list` to show your environments, and `eb terminate` to remove them:
 
