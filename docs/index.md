@@ -10,7 +10,7 @@ There are several options for launching a Node.js dev environment for web applic
 
 This guide illustrates the process of launching a secure Node.js application environment, while also minimizing cost (but it is not intended for production). The environment **should** not cost more then $6/month, and will probably be around $3.50/month. Please ensure that you using an instance that will meet your cost requirements.
 
-In addition to this guide, I have created a README on the GitHub repo that performs the steps here, but using a setup command instead of running each command one at a time. Go to the https://github.com/veloduff/deploy-secure-nodejs-env for more information. 
+In addition to this guide, I have created a README on the GitHub repo that performs the steps here, but using a setup command instead of running each command one at a time. Prior to using the setup command, you should at least read this guide to understand what is being done. Go to the [veloduff/deploy-secure-nodejs-env](https://github.com/veloduff/deploy-secure-nodejs-env) repo for more information about using the setup command.
 
 ## Security in mind 
 
