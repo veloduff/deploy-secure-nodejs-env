@@ -65,6 +65,7 @@ The output below shows which files and directories are being created. Each of th
 Here are the steps to clone and run the setup command. You will need to verify that the application can run locally before deploying.
 
 ```bash
+[~/repos/app-testing]$ cd .. 
 [~/repos]$ git clone https://github.com/veloduff/deploy-secure-nodejs-env
 [~/repos]$ cd app-testing 
 [~/repos/app-testing]$ ~/repos/deploy-secure-nodejs-env/setupBeanstalk.py -d ../Secure_Location/.certificates
@@ -147,6 +148,10 @@ Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools
 <img src="_images/cookie_status.png" width=750px alt="View cookie">
 
 ### Clean and reset
+
+To remove the application environment, you use `eb list` to show your environments, and `eb terminate` to remove them:
+
+[~/repos/app-testing]$ eb terminate <env_name>
 
 If you need to reset your environment, you can remove all the files and directories that were created by the setup command:
 
