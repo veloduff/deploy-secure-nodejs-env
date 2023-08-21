@@ -624,7 +624,7 @@ You can go to the AWS Console to see which environments are running and remove t
 
 If you need to reset your environment, you can remove all the files and directories that were created by the setup command:
 
-`rm -ri .ebignore .gitignore .platform .ebextensions .env` + certificate directory
+`rm -ri .ebignore .gitignore .platform .ebextensions .elasticbeanstalk .env` + certificate directory
 
 ## Conclusion
 
