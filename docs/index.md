@@ -616,25 +616,21 @@ Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools
 
 ![View cookie](_images/cookie_status.png)
 
+### Clean and reset
+
+You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and instances) with the CLI, use `eb list` to show your environments, and `eb terminate` to remove them:
+
+[~/repos/app-testing]$ eb terminate <env_name>
+
+If you need to reset your environment, you can remove all the files and directories that were created by the setup command:
+
+`rm -ri .ebignore .gitignore .platform .ebextensions .env` + certificate directory
+
 ## Conclusion
 
 We're done! We have setup a secure, inexpensive Node.js development environment on AWS Elastic Beanstalk. This environment (if running 24/7), would cost about $6/month (using today's EC2 Spot prices). You now have the option of scaling to a production environment that would include a Load Balancer and official (not self-signed) SSL certificates. The setup for using SSL and redirecting to https is much easier when using a Load Balancer, as that is one of the functions that a Load Balancer was designed to do (but will cost more).
 
 For just general tips for launching a Node.js application on Beanstalk, but not specific to https, have a look at: [Node.js app on Beanstalk](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html)
-
-## After thoughts and making it easier
-
-One of the great things about this setup, is that it is static. You can write a script that creates the directories and files that you will need to launch your Beanstalk environment. Here are the high-level steps.
-
-1. Initialize the node app, and install dependencies:
-   ```
-   $ npm init es6 -y
-   $ npm i express express-session dotenv body-parser
-   ```
-1. Create the application and test locally
-1. Run a setup script (that you write) that will create the directories and files needed for both your local testing and the Beanstalk environment.
-1. Run `eb init` 
-1. Run `eb create`
 
 ## Additional configuration
 
