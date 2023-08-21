@@ -180,7 +180,8 @@ def main():
     certDir = os.path.join(args.d, '')
     userHome = str(Path.home())
 
-    print('\n  The {} directory should be in both the .gitignore file and .ebignore file.'.format(certDir))
+    print("\n  The {} directory should be located outside of the project\n"
+            "    directory or should be in both the .gitignore file and .ebignore files.\n".format(certDir))
     ans = input('  Should the {} directory still be used for the certificates?[YES/no]: '.format(certDir)).lower()
 
     if ans == "yes" or ans == "":
@@ -254,8 +255,8 @@ def main():
         "\n"
         ">>>> 2. DEPLOY <<<<\n"
         "  Once you have verified the application is working, you can deploy to Beanstalk.\n"
-        "  Run 'eb init' and 'eb create' commands, for example (mykeyName is your AWS API key name):\n\n" +
-        "    $ eb init\n" + 
+        "  Run 'eb init' and 'eb create' commands, for example (mykeyName is your AWS API key name):\n\n" 
+        "    $ eb init\n" 
         "    $ eb create --single --enable-spot --instance-types t3.nano,t3.micro <env_name_is_here>\n"
     )
 

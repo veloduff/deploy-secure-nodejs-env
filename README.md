@@ -67,17 +67,19 @@ Here are the steps to clone and run the setup command. You will need to verify t
 ```bash
 [~/repos]$ git clone https://github.com/veloduff/deploy-secure-nodejs-env
 [~/repos]$ cd app-testing 
-[~/repos/app-testing]$ ../deploy-secure-nodejs-app/setupBeanstalk.py -d .certificates
+[~/repos/app-testing]$ ~/repos/deploy-secure-nodejs-env/setupBeanstalk.py -d ../Secure_Location/.certificates
 
-  The .certificates/ directory should be in both the .gitignore file and .ebignore file.
-  Should the .certificates/ directory still be used for the certificates?[YES/no]:
+  The ../Secure_Location/.certificates/ directory should be located outside of the project
+    directory or should be in both the .gitignore file and .ebignore files.
+
+  Should the ../Secure_Location/.certificates/ directory still be used for the certificates?[YES/no]:
 
   Creating Beanstalk SSL file           .ebextensions/ssl-file.config
-  Creating web server key               .certificates/myWebServerKey.pem
-  Creating web server certificate       .certificates/myWebServerCert.pem
-  Creating application key              .certificates/myAppKey.pem
-  Creating application certificate      .certificates/myAppCert.pem
-  Creating pass phrase file             .certificates/pass_phrase.txt
+  Creating web server key               ../Secure_Location/.certificates/myWebServerKey.pem
+  Creating web server certificate       ../Secure_Location/.certificates/myWebServerCert.pem
+  Creating application key              ../Secure_Location/.certificates/myAppKey.pem
+  Creating application certificate      ../Secure_Location/.certificates/myAppCert.pem
+  Creating pass phrase file             ../Secure_Location/.certificates/pass_phrase.txt
   Creating Beanstalk options file       .ebextensions/options.config
   Creating Beanstalk sec group file     .ebextensions/sec-group.config
   Creating Nginx https config file      .platform/nginx/conf.d/https.conf
