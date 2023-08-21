@@ -151,7 +151,7 @@ Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools
 
 You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and instances) with the CLI, use `eb list` to show your environments, and `eb terminate` to remove them:
 
-[~/repos/app-testing]$ eb terminate <env_name>
+`[~/repos/app-testing]$ eb terminate <env_name>`
 
 If you need to reset your environment, you can remove all the files and directories that were created by the setup command:
 
