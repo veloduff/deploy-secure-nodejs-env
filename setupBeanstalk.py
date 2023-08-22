@@ -70,7 +70,7 @@ def create_ssl_file(passFile, webKey, webCert, appKey, appCert, bstalk_SSL_file)
     
     # Create the web server certificate
     cmd = ['openssl', 'req', '-x509', '-new', '-sha256', '-key', webKey, 
-           '-out', webCert, '-subj', '/C=US/ST=California/L=Sunnyvale/O=MyWebServer1/CN=*.elasticbeanstalk.com']
+           '-out', webCert, '-subj', '/C=US/ST=California/L=SJC/O=MyWebServer1/CN=*.elasticbeanstalk.com']
     if runcmd(cmd):
         sslCertsFile.write(ebt._SSL_WEB_SRV_CRT_INFO)
         print('  Creating web server certificate'.ljust(_PRINT_SP, ' '), webCert)
@@ -101,7 +101,7 @@ def create_ssl_file(passFile, webKey, webCert, appKey, appCert, bstalk_SSL_file)
     # Create the application certificate 
     cmd = ['openssl', 'req', '-x509', '-new', '-sha256', '-key', appKey, 
            '-out', appCert, '-passin', 'file:' +  passFile, 
-           '-subj', '/C=US/ST=California/L=Sunnyvale/O=MyApp1/CN=*.elasticbeanstalk.com']
+           '-subj', '/C=US/ST=California/L=SJC/O=MyApp1/CN=*.elasticbeanstalk.com']
     if runcmd(cmd):
         sslCertsFile.write(ebt._SSL_APP_CERT_INFO)
         print('  Creating application certificate'.ljust(_PRINT_SP, ' '), appCert)
