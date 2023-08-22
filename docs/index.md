@@ -618,13 +618,25 @@ Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools
 
 ### Remove and reset
 
-You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and instances) with the CLI, use `eb list` to show your environments, and `eb terminate` to remove them:
+You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and applications) with the CLI, use `eb list` to show your environments, and `eb terminate` to remove them.
 
-`[~/repos/app-testing]$ eb terminate <env_name>`
+This terminates one env, but will leave the application:
+
+```bash
+[~/repos/app-testing]$ eb terminate <env_name>
+```
+
+This terminates all environments and deletes the application:
+
+```bash
+[~/repos/app-testing]$ eb terminate --all
+```
 
 If you need to reset your environment, you can remove all the files and directories that were created by the setup command:
 
-`rm -ri .ebignore .gitignore .platform .ebextensions .elasticbeanstalk .env` + certificate directory
+```bash
+rm -ri .ebignore .gitignore .platform .ebextensions .elasticbeanstalk .env <certificate_directory>
+```
 
 ## Conclusion
 
@@ -634,7 +646,7 @@ For just general tips for launching a Node.js application on Beanstalk, but not 
 
 ## Additional configuration
 
-To add **Managed updates** and to enable access to static files in the `/public` directory, add this to `.ebextensions/options.config`: 
+In the `ebFileTemplates.py` file you will find the templates that are used to create each of the files. You can customize those as needed. For example, to add **Managed updates** and to enable access to static files in the `/public` directory, add this to `.ebextensions/options.config`: 
 
 ```yaml
 option_settings:
@@ -647,4 +659,5 @@ option_settings:
   aws:elasticbeanstalk:environment:proxy:staticfiles:
     /public: /public
 ```
+
 

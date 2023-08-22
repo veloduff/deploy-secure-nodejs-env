@@ -11,8 +11,10 @@
 # License for the specific language governing permissions and limitations under the License.
 #
 
-_SSL_FILE_HEADER = """
+_SSL_FILE_HEADER = """#
+# _SSL_FILE_HEADER 
 # location: .ebextensions/ssl-files.config
+#
 
 files:
 """
@@ -49,25 +51,35 @@ _SSL_APP_CERT_INFO = """
     content: |
 """
 
-## This includes Managed Updates, and staticfiles
-# _OPTIONS_FILE_TEMPLATE = """
-# option_settings:
-#   aws:elasticbeanstalk:environment:proxy:staticfiles:
-#     /public: /public
-#   aws:elasticbeanstalk:managedactions:
-#     ManagedActionsEnabled: true
-#     PreferredStartTime: "Mon:10:00"
-#   aws:elasticbeanstalk:managedactions:platformupdate:
-#     UpdateLevel: patch
-#     InstanceRefreshEnabled: true
-#   aws:elasticbeanstalk:application:environment:
-#     PORT: 5000
-#     PKEY_PASSPHRASE: '{0}'
-#     NODE_ENV: 'production'
-# """
+##
+## Options file that includes managed actions and staticfiles
+## 
+#  _OPTIONS_FILE_TEMPLATE = """#
+#  # _OPTIONS_FILE_TEMPLATE 
+#  # location: .ebextensions/options.config 
+#  #
+#  
+#  option_settings:
+#    aws:elasticbeanstalk:environment:proxy:staticfiles:
+#      /public: /public
+#    aws:elasticbeanstalk:managedactions:
+#      ManagedActionsEnabled: true
+#      PreferredStartTime: "Mon:10:00"
+#    aws:elasticbeanstalk:managedactions:platformupdate:
+#      UpdateLevel: patch
+#      InstanceRefreshEnabled: true
+#    aws:elasticbeanstalk:application:environment:
+#      PORT: 5000
+#      PKEY_PASSPHRASE: '{0}'
+#      NODE_ENV: 'production'
+#  """
 
 
-_OPTIONS_FILE_TEMPLATE = """
+_OPTIONS_FILE_TEMPLATE = """#
+# _OPTIONS_FILE_TEMPLATE 
+# location: .ebextensions/options.config
+#
+
 option_settings:
   aws:elasticbeanstalk:application:environment:
     PORT: 5000
@@ -75,7 +87,11 @@ option_settings:
     NODE_ENV: 'production'
 """
 
-_SEC_GROUP_TEMPLATE = """
+_SEC_GROUP_TEMPLATE = """#
+# _SEC_GROUP_TEMPLATE
+# location: .ebextensions/sec-group.config
+#
+
 Resources:
   sslSecurityGroupIngress: 
     Type: AWS::EC2::SecurityGroupIngress
@@ -88,9 +104,11 @@ Resources:
 """
 
 
-_HTTPS_CONF_FILE_TEMPLATE = """
-# HTTPS server
+_HTTPS_CONF_FILE_TEMPLATE = """#
+# _HTTPS_CONF_FILE_TEMPLATE
+# HTTPS Server configuration
 # location: .platform/nginx/conf.d/https.conf
+#
 
 server {
   listen       443 ssl;
@@ -117,9 +135,13 @@ server {
 }
 """
 
-_NGINX_CONF_TEMPLATE = """
+_NGINX_CONF_TEMPLATE = """#
+# _NGINX_CONF_TEMPLATE
+# location: .platform/nginx/nginx.conf
 # Elastic Beanstalk Nginx Configuration File
-# Added redirect
+#
+# Added redirect to https
+#
 
 user                    nginx;
 error_log               /var/log/nginx/error.log warn;
@@ -167,7 +189,11 @@ http {
 }
 """
 
-_ENV_FILE_TEMPLATE = """
+_ENV_FILE_TEMPLATE = """#
+# _ENV_FILE_TEMPLATE
+# location: .env
+#
+
 PKEY_PASSPHRASE = '{0}'
 LOCAL_KEY_DIR = '{1}'
 APP_KEY_FILE = '{2}'
