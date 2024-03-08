@@ -10,27 +10,6 @@ The environment **should** not cost more then $6/month, and will probably be aro
 
 Below, I provide the steps needed to launch the environment using a setup command (`setupBeanstalk.py`). Additionally, I have documented the entire process in detail: [Deploy a secure Node.js app in a dev environment](https://veloduff.github.io/deploy-secure-nodejs-env/). If you are familiar with AWS Elastic Beanstalk, you may be able to skip steps in the documentation, but you should at least read the documentation to understand what is being done.
 
-## Troubleshooting
-
-To troubleshoot, ssh on to the instance and look at these logs:
-```sh
-/var/log/messages
-/var/log/web.stdout.log
-/var/log/nginx/error.log
-/var/log/nginx/access.log
-```
-
-Restart web.service with:
-```sh
-systemctl restart web.service
-```
-
-Restart nginx:
-```sh
-systemctl restart nginx
-```
-
-
 ## Steps
 
 Here is an overview of the steps:
@@ -167,6 +146,38 @@ You should see your app running on https, and you can check the certificate by c
 Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools". And then click on the "Application" tab, and in the "Storage" section, you should see "Cookies" and under that you should see the cookie that was set by the Node.js application. Both "HttpOnly" and "Secure" should be checked:
 
 <img src="_images/cookie_status.png" width=750px alt="View cookie">
+
+## Troubleshooting
+
+**Enable SSH**
+
+SSH to the instance is enabled with the ```eb``` command, this command will ask for your key (needs to located in the ~/.ssh directory):
+```sh
+eb ssh --setup
+```
+
+Once the setup is completed, ssh with the ```eb ssh``` command:
+```sh
+eb ssh
+```
+
+To troubleshoot, ssh on to the instance and look at these logs:
+```sh
+/var/log/messages
+/var/log/web.stdout.log
+/var/log/nginx/error.log
+/var/log/nginx/access.log
+```
+
+Restart web.service with:
+```sh
+systemctl restart web.service
+```
+
+Restart nginx:
+```sh
+systemctl restart nginx
+```
 
 ### Remove and reset
 
