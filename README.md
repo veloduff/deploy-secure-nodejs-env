@@ -126,7 +126,7 @@ This will prompt for each necessary option:
 $ eb init
 ```
 
-This provides options at the command line, including the ssh keyname for enabling ssh: 
+This provides options at the command line, including the ssh keyname (located in ~/.ssh) for enabling ssh: 
 ```bash
 $ eb init -r us-west-2 -p node.js eb-testing-app-1 --keyname <keyname> 
 $ eb create --single --enable-spot --instance-types t3.nano,t3.micro <env_name_is_here>
