@@ -19,10 +19,10 @@ Here is an overview of the steps:
    $ npm init es6 -y
    $ npm i express express-session dotenv body-parser
    ```
-1. Create the application 
-1. Run the setup command 
-1. Verify the application can run locally
-1. Deploy:
+2. Create the Node.js application 
+3. Run the setup command 
+4. Verify the application can run locally
+5. Deploy:
    1. Run `eb init`
    1. Run `eb create`
 
@@ -39,7 +39,7 @@ Application setup (example based on provided application):
 [~/repos/app-testing]$ npm i express express-session dotenv body-parser
 ```
 
-### 1. Create the Node.js application
+### 2. Create the Node.js application
 
 Now create (cut-n-paste) the application `app.js` using the `session-with-https.js` as the source. The final Node.js project structure should look like this:
 
@@ -51,7 +51,7 @@ Now create (cut-n-paste) the application `app.js` using the `session-with-https.
 └── package.json
 ```
 
-### 2. Run the setup command 
+### 3. Run the setup command 
 
 To use the setup command `setupBeanstalk.py`, you can clone the repo, but do not clone it in the same directory as the Node.js app. 
 
@@ -106,7 +106,7 @@ Setup finished, now verify the application works.
 
 ```
 
-### Verify application can run locally
+### 4. Verify application can run locally
 
 As noted in the command output, you will need to verify that the application can run locally before deploying. You can do this with the `node` command:
 
@@ -117,7 +117,7 @@ https server started on port 3030 running in development
 
 Now go to https://localhost:3030 (note https) to verify.
 
-### Deploy
+### 5. Deploy
 
 Once you have verified that the application can run locally, you can deploy to Beanstalk. The `eb init` command has several prompts, which can optionally be given as arguments to the command.
 
