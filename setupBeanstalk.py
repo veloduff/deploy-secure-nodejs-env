@@ -169,6 +169,14 @@ def create_env_file(passFile, certDir, appKey, appCert):
             )
     )
 
+def create_min_ebignore():
+
+    print('\n  Creating minimal .ebignore file'.ljust(_PRINT_SP, ' '), '.ebignore')
+
+    ebignoreFile = open('.ebignore', 'w')
+    ebignoreFile.write(
+        ebt._MIN_EBIGNORE_FILE
+    )
 
 def main():
 
@@ -217,7 +225,6 @@ def main():
     create_nginx_conf_file(nginx_conf_file)
     create_env_file(passFile, certDir, appKey, appCert)
 
-
     defaultIgnoreDir = userHome + '/repos/gitignore/'
     defaultGitIgnoreFile = defaultIgnoreDir + '.gitignore' 
     defaultEbIgnoreFile = defaultIgnoreDir + '.ebignore' 
@@ -238,7 +245,8 @@ def main():
         sys.exit(1)
 
     if ebIgnoreFile == 'NONE':
-        pass
+        # Create minimal .ebigore file with '.env'
+        create_min_ebignore()
     elif ebIgnoreFile == '':
         ebIgnoreFile = defaultEbIgnoreFile
         shutil.copy2(ebIgnoreFile, '.ebignore')

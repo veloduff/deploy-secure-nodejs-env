@@ -199,3 +199,12 @@ LOCAL_KEY_DIR = '{1}'
 APP_KEY_FILE = '{2}'
 APP_CERT_FILE = '{3}'
 """
+
+_MIN_EBIGNORE_FILE = """#
+# _MIN_EBIGNORE_FILE 
+# location: .ebignore
+#
+
+.env
+
+"""

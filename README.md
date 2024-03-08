@@ -10,6 +10,27 @@ The environment **should** not cost more then $6/month, and will probably be aro
 
 Below, I provide the steps needed to launch the environment using a setup command (`setupBeanstalk.py`). Additionally, I have documented the entire process in detail: [Deploy a secure Node.js app in a dev environment](https://veloduff.github.io/deploy-secure-nodejs-env/). If you are familiar with AWS Elastic Beanstalk, you may be able to skip steps in the documentation, but you should at least read the documentation to understand what is being done.
 
+## Troubleshooting
+
+To troubleshoot, ssh on to the instance and look at these logs:
+```sh
+/var/log/messages
+/var/log/web.stdout.log
+/var/log/nginx/error.log
+/var/log/nginx/access.log
+```
+
+Restart web.service with:
+```sh
+systemctl restart web.service
+```
+
+Restart nginx:
+```sh
+systemctl restart nginx
+```
+
+
 ## Steps
 
 Here is an overview of the steps:
