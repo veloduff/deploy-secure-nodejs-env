@@ -10,6 +10,12 @@ The environment **should** not cost more then $6/month, and will probably be aro
 
 Below, I provide the steps needed to launch the environment using a setup command (`setupBeanstalk.py`). Additionally, I have documented the entire process in detail: [Deploy a secure Node.js app in a dev environment](https://veloduff.github.io/deploy-secure-nodejs-env/). If you are familiar with AWS Elastic Beanstalk, you may be able to skip steps in the documentation, but you should at least read the documentation to understand what is being done.
 
+## Permissions and IAM roles
+
+From [Managing Elastic Beanstalk service roles](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/iam-servicerole.html):
+
+If you launch an environment using the ```eb create``` command of the Elastic Beanstalk Command Line Interface (EB CLI) and don't specify a service role through the ```--service-role``` option, Elastic Beanstalk creates the default service role **aws-elasticbeanstalk-service-role**. If the default service role already exists, Elastic Beanstalk uses it for the new environment. The Elastic Beanstalk console also performs similar actions in these situations.
+
 ## Steps
 
 Here is an overview of the steps:
