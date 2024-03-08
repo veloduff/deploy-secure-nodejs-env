@@ -20,13 +20,13 @@ Here is an overview of the steps:
    $ npm i express express-session dotenv body-parser
    ```
 1. Create the application 
+1. Run the setup command 
 1. Verify the application can run locally
-1. Run the setup script 
 1. Deploy:
    1. Run `eb init`
    1. Run `eb create`
 
-### Node.js application
+### 1. Initialize the Node.js application
 
 It is required that you have a Node.js application, and the application is using https at the application level. I have provided an example: `session-with-https.js`. 
 
@@ -39,6 +39,8 @@ Application setup (example based on provided application):
 [~/repos/app-testing]$ npm i express express-session dotenv body-parser
 ```
 
+### 1. Create the Node.js application
+
 Now create (cut-n-paste) the application `app.js` using the `session-with-https.js` as the source. The final Node.js project structure should look like this:
 
 ```bash
@@ -49,7 +51,7 @@ Now create (cut-n-paste) the application `app.js` using the `session-with-https.
 └── package.json
 ```
 
-### Run the setup command 
+### 2. Run the setup command 
 
 To use the setup command `setupBeanstalk.py`, you can clone the repo, but do not clone it in the same directory as the Node.js app. 
 
