@@ -121,8 +121,14 @@ Now go to https://localhost:3030 (note https) to verify.
 
 Once you have verified that the application can run locally, you can deploy to Beanstalk. The `eb init` command has several prompts, which can optionally be given as arguments to the command.
 
+This will prompt for each necessary option:
 ```bash
 $ eb init
+```
+
+This provides options at the command line, including the ssh keyname for enabling ssh: 
+```bash
+$ eb init -r us-west-2 -p node.js eb-testing-app-1 --keyname <keyname> 
 $ eb create --single --enable-spot --instance-types t3.nano,t3.micro <env_name_is_here>
 ```
 
@@ -152,8 +158,7 @@ Use Chrome to load the page, and go to "View" -> "Developer" -> "Developer Tools
 ## Troubleshooting
 
 **Enable SSH**
-
-SSH to the instance is enabled with the ```eb``` command, this command will ask for your key (needs to located in the ~/.ssh directory):
+If you have not eabled ssh on the instance this will need to be done first. SSH to the instance is enabled with the ```eb``` command, this command will ask for your key (needs to located in the ~/.ssh directory). This process will terminate the existing instance and launch a new one:
 ```sh
 eb ssh --setup
 ```
