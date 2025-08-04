@@ -1,0 +1,1211 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="assets/bicycle-solid_veloduff.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Deploy a secure Node.js app in a dev environment - Veloduff Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploy-a-secure-nodejs-app-in-a-dev-environment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Veloduff Documentation" class="md-header__button md-logo" aria-label="Veloduff Documentation" data-md-component="logo">
+      
+  <img src="assets/bicycle-solid_veloduff.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Veloduff Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deploy a secure Node.js app in a dev environment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/veloduff/deploy-secure-nodejs-env" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    veloduff/deploy-secure-nodejs-env
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Veloduff Documentation" class="md-nav__button md-logo" aria-label="Veloduff Documentation" data-md-component="logo">
+      
+  <img src="assets/bicycle-solid_veloduff.png" alt="logo">
+
+    </a>
+    Veloduff Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/veloduff/deploy-secure-nodejs-env" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    veloduff/deploy-secure-nodejs-env
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="." class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    Launch a secure Node.js dev environment
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Launch a secure Node.js dev environment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#security-in-mind" class="md-nav__link">
+      Security in mind
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#prerequisites" class="md-nav__link">
+      Prerequisites
+    </a>
+  
+    <!-- Table of contents list -->
+    
+      <nav class="md-nav" aria-label="Prerequisites">
+        <ul class="md-nav__list">
+          
+            <!-- Table of contents item -->
+
+          
+        </ul>
+      </nav>
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#deployment-strategy-and-overview" class="md-nav__link">
+      Deployment strategy and overview
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#how-does-beanstalk-deploy" class="md-nav__link">
+      How does Beanstalk deploy
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#using-beanstalk-configuration-files" class="md-nav__link">
+      Using Beanstalk configuration files
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#setup-the-project-environment" class="md-nav__link">
+      Setup the project environment
+    </a>
+  
+    <!-- Table of contents list -->
+    
+      <nav class="md-nav" aria-label="Setup the project environment">
+        <ul class="md-nav__list">
+          
+            <!-- Table of contents item -->
+
+          
+            <!-- Table of contents item -->
+
+          
+        </ul>
+      </nav>
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#project-structure" class="md-nav__link">
+      Project structure
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#create-ssl-keys-and-certificates" class="md-nav__link">
+      Create SSL keys and certificates
+    </a>
+  
+    <!-- Table of contents list -->
+    
+      <nav class="md-nav" aria-label="Create SSL keys and certificates">
+        <ul class="md-nav__list">
+          
+            <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#for-the-web-server-create-a-key-and-cert-without-using-a-pass-phrase" class="md-nav__link">
+      For the web server: Create a key and cert without using a pass phrase
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+          
+            <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#for-the-application-create-a-key-and-cert-using-a-pass-phrase" class="md-nav__link">
+      For the application: Create a key and cert using a pass phrase
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+          
+        </ul>
+      </nav>
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#setup-local-testing-environment" class="md-nav__link">
+      Setup local testing environment
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#test-locally" class="md-nav__link">
+      Test locally
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#initialize-and-deploy-on-beanstalk" class="md-nav__link">
+      Initialize and deploy on Beanstalk
+    </a>
+  
+    <!-- Table of contents list -->
+    
+      <nav class="md-nav" aria-label="Initialize and deploy on Beanstalk">
+        <ul class="md-nav__list">
+          
+            <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#initialize-the-application" class="md-nav__link">
+      Initialize the application
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+          
+            <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#configure-your-deployment" class="md-nav__link">
+      Configure your deployment
+    </a>
+  
+    <!-- Table of contents list -->
+    
+      <nav class="md-nav" aria-label="Configure your deployment">
+        <ul class="md-nav__list">
+          
+            <!-- Table of contents item -->
+
+          
+            <!-- Table of contents item -->
+
+          
+            <!-- Table of contents item -->
+
+          
+            <!-- Table of contents item -->
+
+          
+            <!-- Table of contents item -->
+
+          
+            <!-- Table of contents item -->
+
+          
+        </ul>
+      </nav>
+    
+  </li>
+
+          
+            <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#create-the-beanstalk-environment-this-deploys-as-well" class="md-nav__link">
+      Create the Beanstalk environment (this deploys as well)
+    </a>
+  
+    <!-- Table of contents list -->
+    
+      <nav class="md-nav" aria-label="Create the Beanstalk environment (this deploys as well)">
+        <ul class="md-nav__list">
+          
+            <!-- Table of contents item -->
+
+          
+        </ul>
+      </nav>
+    
+  </li>
+
+          
+            <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#remove-and-reset" class="md-nav__link">
+      Remove and reset
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+          
+        </ul>
+      </nav>
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#conclusion" class="md-nav__link">
+      Conclusion
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+        <!-- Table of contents item -->
+
+  <li class="md-nav__item">
+    <a href="#additional-configuration" class="md-nav__link">
+      Additional configuration
+    </a>
+  
+    <!-- Table of contents list -->
+    
+  </li>
+
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+  
+  
+
+
+<h1 id="deploy-a-secure-nodejs-app-in-a-dev-environment">Deploy a secure Node.js app in a dev environment</h1>
+<p>There are several options for launching a Node.js dev environment for web applications. For this guide, I'll be using AWS Elastic Beanstalk. The security and knowing what region my data is in, are enough reasons to choose Beanstalk. That said, there are some extra steps that we'll have to take to launch an inexpensive dev environment on Beanstalk. My goal is to keep cost to nothing, or less than $5/month. You can also think about using Amplify, but this guide is using Node.js without React. </p>
+<p>This guide illustrates the process of launching a secure Node.js application environment, while also minimizing cost (but it is not intended for production). The environment <strong>should</strong> not cost more then $6/month, and will probably be around $3.50/month. Please ensure that you using an instance that will meet your cost requirements.</p>
+<p>In addition to this guide, I have created a README on the GitHub repo that performs the steps here, but using a setup command instead of running each command one at a time. Prior to using the setup command, you should at least read this guide to understand what is being done. Go to the <a href="https://github.com/veloduff/deploy-secure-nodejs-env">veloduff/deploy-secure-nodejs-env</a> repo for more information about using the setup command.</p>
+<h2 id="security-in-mind">Security in mind</h2>
+<p>It can be very convenient to initially approach projects without consideration for security. For example, using plain text to store passwords or using http instead of https. Rather than having to refactor to meet security requirements later on, I prefer to start with at least some security measures in place already. This is not the easy road, and it is certainly the path less chosen. So if you find yourself spending hours upon hours trying to debug why a cert won't load (bad characters), or why an instance isn't reachable (wrong security group), or why the reverse proxy settings aren't loading (change from AL1 to AL2), you will have found that you are not alone. Security is hard, and not for the weary. With that said, the numerous "extra" steps here that you may not want to do, but will result in a secure and inexpensive development environment for running Node.js apps.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>We will be using the Elastic Beanstalk command line utility, rather than the AWS Console. It is assumed that you have installed the <code>eb</code> command line utility. Details and instructions can be found here: <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html">Install the EB CLI</a>. You will also need to <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html">configure AWS CLI access</a>. It is also assumed that you have the node development tools installed, as well as <code>git</code>.</p>
+<h4 id="security-starting-at-the-application-layer">Security starting at the application layer</h4>
+<p>The approach that I have taken here is to use <code>https</code> at the application layer. Specifically, rather than using <code>http.createServer</code> (which in express is the same as <code>app.listen</code>, <a href="https://expressjs.com/en/5x/api.html#app.listen">reference here</a>) we'll be using <code>https.createServer</code> (note the http<strong>s</strong>). This means that we will have to use SSL certificates (although they will be self-signed) to secure the connection from the browser all the way to the application, and not just to the web server (or reverse proxy in this case).</p>
+<h2 id="deployment-strategy-and-overview">Deployment strategy and overview</h2>
+<p>As we will not be using production features (e.g., Load Balancer, backups, managed updates), this environment that we are setting up is intended to be used for development purposes. To minimize cost we'll be using a single instance (no Load Balancer) Beanstalk environment running on a spot instance (<a href="https://aws.amazon.com/ec2/spot/">more info on EC2 Spot Instances</a>). The environment <strong>should</strong> not cost more then $6/month, and will probably be around $3.50/month. Please ensure that you are using an instance that will meet your cost requirements. </p>
+<p>To deploy a secure Node.js development environment on Beanstalk, we'll need to:</p>
+<ul>
+<li>Have an application to deploy that uses https (at the application layer) - I have provided an example app</li>
+<li>Create two sets of self-signed SSL keys and certificates (one for the web server and one for the application)</li>
+<li>Create the configuration files for both the Beanstalk environment and the Nginx reverse proxy</li>
+<li>Create a single instance Beanstalk environment using EC2 Spot </li>
+</ul>
+<h2 id="how-does-beanstalk-deploy">How does Beanstalk deploy</h2>
+<p>It is useful to understand both how deployment with Beanstalk happens and what will be included in the deployment. Throughout the process of attempting to deploy environments, I struggled because I did not understand why my changes and updates were not being deployed.</p>
+<p>Beanstalk deployments are dependent on whether or not you are using <code>.gitignore</code> and <code>.ebignore</code>. For now, let's assume that you are not using a <code>.ebignore</code> file, but you do have a <code>.gitignore</code> (which is probably the most common dev environment). In this scenario, Beanstalk will only deploy changes that have been either <strong>staged</strong> or <strong>committed</strong> in your git repo. In other words, <strong>Beanstalk uses the git status to deploy your applications</strong>. The Beanstalk documentation describes this best:</p>
+<p>From: <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-cli-git.html#eb3-cli-git.deploy">Using the EB CLI with Git (Deploying changes)</a></p>
+<blockquote>
+<p><strong>Deploying changes</strong></p>
+<p>By default, the EB CLI deploys the latest commit in the current branch, using the commit ID and message as the application version label and description, respectively. If you want to deploy to your environment without committing, you can use the --staged option to deploy changes that have been added to the staging area.</p>
+</blockquote>
+<p>What this means, is that if you make a change without staging <strong>AND</strong> committing the change, it will not be included in the next deployment. That said, from the documentation you can see that the changes can be included by only staging (i.e., <code>git add .</code>), and then using the command <code>eb deploy --staged</code>. </p>
+<p>Another important part of deployment, is whether or not you have a <code>.ebignore</code> file in your project root.</p>
+<p>From: <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-configuration.html#eb-cli3-ebignore">Configure the EB CLI (Ignoring files using .ebignore)</a></p>
+<blockquote>
+<p>You can tell the EB CLI to ignore certain files in your project directory by adding the file .ebignore to the directory. This file works like a .gitignore file. When you deploy your project directory to Elastic Beanstalk and create a new application version, the EB CLI doesn't include files specified by .ebignore in the source bundle that it creates.</p>
+<p>If .ebignore isn't present, but .gitignore is, the EB CLI ignores files specified in .gitignore. If .ebignore is present, the EB CLI doesn't read .gitignore.</p>
+<p>When .ebignore is present, the EB CLI doesn't use git commands to create your source bundle. This means that EB CLI ignores files specified in .ebignore, and includes all other files. In particular, <strong>it includes uncommitted source files</strong>.</p>
+</blockquote>
+<p>There are two very important items to note from this: 
+1. If <code>.ebignore</code> is present, the EB CLI doesn't read <code>.gitignore</code>. 
+1. When <code>.ebignore</code> is present, the EB CLI doesn't use git commands to create your source bundle. This means that the EB CLI ignores files specified in <code>.ebignore</code>, and includes all other files. In particular, it includes uncommitted source files. Which is not case if <strong>only</strong> the <code>.gitignore</code> file exists.</p>
+<p>With that said, the next steps will document how to setup a straightforward development environment that uses both the <code>.gitignore</code> and <code>.ebignore</code> files in the project's root directory.</p>
+<h2 id="using-beanstalk-configuration-files">Using Beanstalk configuration files</h2>
+<p>Something that I didn't discover until I had already deployed several apps on Beanstalk, was <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions.html">Advanced environment customization with configuration files (.ebextensions)</a>. This allows you to use the <code>.ebextensions</code> folder at your project root directory for Beanstalk configuration files (with extension <code>.config</code>). From the docs:</p>
+<blockquote>
+<p>These configuration files are YAML- or JSON-formatted documents with a .config file extension that you place in a folder named .ebextensions and deploy in your application source bundle.</p>
+<p>For example here is a <code>.ebextensions/network-load-balancer.config</code> file from <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions.html">Advanced environment customization with configuration files (.ebextensions)</a>, that modifies a configuration option to set the type of your environment's load balancer to Network Load Balancer.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w"> </span>option_settings:
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">   </span>aws:elasticbeanstalk:environment:
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">     </span>LoadBalancerType:<span class="w"> </span>network
+</span></code></pre></div>
+</blockquote>
+<p>More information, including precedence, can be found here:  <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options.html">Configuration options</a>.</p>
+<p>Where you can, my suggestion is to use <code>&lt;file&gt;.config</code> files, rather than using command line options or using the AWS Console. This reduces the risk of setting options in more than one place, and also allows you to rebuild environments with the same configuration files.</p>
+<p>You can use the <code>eb config --display</code> command to show the configuration, or make changes with <code>eb config</code>. You can also use existing (and customized) environments as a template (see <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-config.html">eb config</a>).</p>
+<p>We will be using a file named <code>options.config</code> for Beanstalk configuration settings.</p>
+<h2 id="setup-the-project-environment">Setup the project environment</h2>
+<p>You have the option of not using <code>git</code> at all, but as that is usually not the case, it's assumed that you will be using <code>git</code>. If you have not already, you should initialize your repo with git, here's an example:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>git<span class="w"> </span>init<span class="w"> </span>-b<span class="w"> </span>main
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;# My new repo&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>README.md
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;initial commit&quot;</span>
+</span></code></pre></div>
+<h4 id="create-the-gitignore-and-ebignore-files">Create the <code>.gitignore</code> and <code>.ebignore</code> files</h4>
+<p>Now you need to setup the <code>.gitignore</code> and <code>.ebignore</code> files. My suggestion is to use a <code>.ebignore</code> file based on a <code>.gitignore</code> file that you would normally use for development. I have a catch-all <code>.gitignore</code> file that I copy to <code>.ebignore</code> and then I add Beanstalk files/dirs I want to ignore to my <code>.gitignore</code> file. In others words, use the <code>.gitignore</code> file you normally use for <code>.ebignore</code>, and then add Beanstalk files/dirs to your <code>.gitignore</code> file. </p>
+<p>Hopefully these steps help to clarify:
+1. Copy an existing <code>.gitignore</code> file to the project root
+1. Copy <code>.gitignore</code> to <code>.ebignore</code> 
+1. Because the SSL keys and certs are stored in files that are in the <code>.ebextensions</code> directory, <strong>you need to make sure that the <code>.gitignore</code> file includes the Beanstalk directories</strong>, so your keys and certs are not included on a public facing repo. To do this, add the necessary Beanstalk specific dirs/files to the <code>.gitignore</code> file. For example, at the bottom of my <code>.gitignore</code> file, I add this:
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># Elastic Beanstalk
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>.ebextensions/
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>.elasticbeanstalk/
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>.platform/
+</span></code></pre></div></p>
+<p><strong>NOTE</strong>: It's important to remember <strong>not</strong> to include the above directories in the <code>.ebignore</code> file, otherwise the configuration files will not be included in the deployment.</p>
+<h4 id="more-information-on-the-deployment-workflow">More information on the deployment workflow</h4>
+<p>On the <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/platforms-linux-extend.html">Extending Elastic Beanstalk Linux platforms</a> page, look at the <strong>"Instance deployment workflow"</strong> for an illustrated introduction for how Beanstalk deployments work.</p>
+<h2 id="project-structure">Project structure</h2>
+<p>There will be several files and directories that we will be creating (in <code>.ebextensions</code> and other directories). There is an example project directory on the same page mentioned above, if you go to <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/platforms-linux-extend.html">Extending Elastic Beanstalk Linux platforms</a>, and look under <strong>"Application example with extensions"</strong>. This has the extensions directory (<code>.ebextensions</code>) and the proxy configuration directory (<code>.platform</code>) as well.</p>
+<p>For our project, here is the project structure that we will be using (there is nothing to create now, this is just for reference):
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>.
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├──<span class="w"> </span>.ebextensions
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│<span class="w">   </span>├──<span class="w"> </span>options.config
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│<span class="w">   </span>├──<span class="w"> </span>sec-group.config
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│<span class="w">   </span>└──<span class="w"> </span>ssl-files.config
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>├──<span class="w"> </span>.ebignore
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>├──<span class="w"> </span>.elasticbeanstalk
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│<span class="w">   </span>└──<span class="w"> </span>config.yml
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>├──<span class="w"> </span>.env
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>├──<span class="w"> </span>.gitignore
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>├──<span class="w"> </span>.platform
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>│<span class="w">   </span>└──<span class="w"> </span>nginx
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>│<span class="w">       </span>├──<span class="w"> </span>conf.d
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>│<span class="w">       </span>│<span class="w">   </span>└──<span class="w"> </span>https.conf
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>│<span class="w">       </span>└──<span class="w"> </span>nginx.conf
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>├──<span class="w"> </span>app.js
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>├──<span class="w"> </span>package-lock.json
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>└──<span class="w"> </span>package.json
+</span></code></pre></div></p>
+<h2 id="create-ssl-keys-and-certificates">Create SSL keys and certificates</h2>
+<p>Before we do the actual setup of the Beanstalk environment, and because we will be using SSL (https), we're going to first create the SSL key and certificate for the Nginx web server, and second, also create a cert/key for the app itself. By creating two different sets of certs, we are isolating resources. If the app cert is compromised, the web server cert is still safe, and vice versa. For the app cert, the user (e.g., webapp) running the app on the instance will need permissions to access the cert (directory and file permissions). Additionally, we will be using a pass phrase for the app cert. The pass phrase will be included in a Beanstalk environment variable, but can not be seen in the github repo (and we'll use <code>.env</code> for local testing and put <code>.env</code> in the <code>.gitignore file</code>).</p>
+<p>We're going to use self-signed certificates, created with <code>openssl</code>.</p>
+<p>The cert used for the web server will not have a pass phrase, because we want the web server to be able restart without having to enter the pass phrase. The application cert will have a pass phrase that we provide as part of the environment in Beanstalk, but the pass phrase will not be visible on the github repo.</p>
+<h3 id="for-the-web-server-create-a-key-and-cert-without-using-a-pass-phrase">For the web server: Create a key and cert without using a pass phrase</h3>
+<p>This command will generate an RSA private key file (saved in PEM format):</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>openssl<span class="w"> </span>genpkey<span class="w"> </span>-algorithm<span class="w"> </span>RSA<span class="w"> </span>-pkeyopt<span class="w"> </span>rsa_keygen_bits:4096<span class="w"> </span>-out<span class="w"> </span>myWebServerKey.pem<span class="w"> </span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>..........................................................................++++
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>.....................................................................................................................++++
+</span></code></pre></div>
+<p>This next command will create the certificate request file (also in PEM format) using the key file just created. I'm using the domain <code>*.elasticbeanstalk.com</code> to remind me what the cert is intended for, but you should be able use any domain you want.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-new<span class="w"> </span>-sha256<span class="w"> </span>-key<span class="w"> </span>myWebServerKey.pem<span class="w"> </span>-out<span class="w"> </span>myWebServerCertReq.pem<span class="w"> </span>-subj<span class="w"> </span><span class="s1">&#39;/C=US/ST=California/L=SJC/O=MyOrg1/CN=*.elasticbeanstalk.com&#39;</span>
+</span></code></pre></div>
+<h3 id="for-the-application-create-a-key-and-cert-using-a-pass-phrase">For the application:  Create a key and cert using a pass phrase</h3>
+<p>We'll use the <code>openssl</code> command to generate pass phrase, and save it to a file to avoid STDOUT (and avoid command line history and ps info):
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">32</span><span class="w"> </span>&gt;<span class="w"> </span>pass_phrase.txt
+</span></code></pre></div></p>
+<p>This next command will generate an RSA private key file (saved in PEM format), using the pass phrase we just created as input:
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>openssl<span class="w"> </span>genpkey<span class="w"> </span>-algorithm<span class="w"> </span>RSA<span class="w"> </span>-pkeyopt<span class="w"> </span>rsa_keygen_bits:4096<span class="w"> </span>-aes-256-cbc<span class="w"> </span>-pass<span class="w"> </span>file:pass_phrase.txt<span class="w"> </span>-out<span class="w"> </span>myAppKey1.pem
+</span></code></pre></div></p>
+<p>And now create the certificate request file (also in PEM format) using the key file we just created and the pass phrase file as input.
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-new<span class="w"> </span>-sha256<span class="w"> </span>-key<span class="w"> </span>myAppKey1.pem<span class="w"> </span>-passin<span class="w"> </span>file:pass_phrase.txt<span class="w"> </span>-out<span class="w"> </span>myAppCertReq1.pem<span class="w"> </span>-subj<span class="w"> </span><span class="s1">&#39;/C=US/ST=California/L=SJC/O=MyApp1/CN=*.elasticbeanstalk.com&#39;</span>
+</span></code></pre></div></p>
+<p><strong>NOTE:</strong> You will need these five files (two cert files, two key files, one pass phrase file) in later steps to build the <code>ssl-files.config</code> file.</p>
+<h2 id="setup-local-testing-environment">Setup local testing environment</h2>
+<p>For local testing, you'll need to setup a <code>.env</code> file (used by the dotenv package) with cert and key information to be used by your application. Make sure that <code>.env</code> is in your <code>.gitignore</code> file. In your project root, create the <code>.env</code> file with the pass phrase, the location of the application cert and key (which is in a directory you choose), and their file names on your local machine:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># location: .env (of project root)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>PKEY_PASSPHRASE:<span class="w"> </span><span class="s1">&#39;&lt;pass_phrase_for_private_key&gt;&#39;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nv">LOCAL_KEY_DIR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;../Certificates/&#39;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="nv">APP_KEY_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;myAppKey1.pem&#39;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nv">APP_CERT_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;myAppCertReq1.pem&#39;</span>
+</span></code></pre></div>
+<h2 id="test-locally">Test locally</h2>
+<p>In the interest of showing an end-to-end process, I am including the example code below. This is an app that will create a session (cookie) if the connection is using https from the browser to the app.</p>
+<p>Here the are steps to create the app. First, initialize the node project with ES6 to support <code>type: module</code>, and then install needed packages:
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>npm<span class="w"> </span>init<span class="w"> </span>es6<span class="w"> </span>-y
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>$<span class="w"> </span>npm<span class="w"> </span>i<span class="w"> </span>express<span class="w"> </span>express-session<span class="w"> </span>dotenv<span class="w"> </span>body-parser
+</span></code></pre></div></p>
+<p>Create the <code>app.js</code> file with this:
+<div class="language-js highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">import</span><span class="w"> </span><span class="nx">dotenv</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;dotenv&#39;</span><span class="p">;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nx">dotenv</span><span class="p">.</span><span class="nx">config</span><span class="p">();</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;fs&#39;</span><span class="p">;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">import</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express&#39;</span><span class="p">;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="k">import</span><span class="w"> </span><span class="nx">bodyParser</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;body-parser&#39;</span><span class="p">;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">import</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;express-session&#39;</span><span class="p">;</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="kd">const</span><span class="w"> </span><span class="nx">RUNTIME_ENV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;development&#39;</span><span class="p">;</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">()</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="kd">const</span><span class="w"> </span><span class="nx">securePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3030</span><span class="p">;</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span><span class="w"> </span><span class="nx">extended</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}));</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="kd">let</span><span class="w"> </span><span class="nx">https</span><span class="p">;</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="nx">https</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">import</span><span class="p">(</span><span class="s1">&#39;node:https&#39;</span><span class="p">);</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;https support is disabled!&#39;</span><span class="p">);</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="p">}</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">session</span><span class="p">({</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">  </span><span class="nx">secret</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;keyboard cat&#39;</span><span class="p">,</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">  </span><span class="nx">resave</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">  </span><span class="nx">saveUninitialized</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">  </span><span class="nx">cookie</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="nx">secure</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">    </span><span class="nx">httpOnly</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="p">}))</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">  </span><span class="p">.</span><span class="nx">get</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="w">    </span><span class="sb">` &lt;!DOCTYPE html&gt; </span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="sb">      &lt;html&gt;&lt;head&gt;&lt;title&gt;Session example&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="sb">      &lt;div style=&quot;text-align:center; margin: 0 auto; max-width: 550px;&quot;&gt;</span>
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="sb">        &lt;br&gt;&lt;br&gt;</span>
+</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="sb">        &lt;h3&gt;Session (cookies) example&lt;/h3&gt;</span>
+</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="sb">          &lt;p&gt;</span>
+</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="sb">            This is an example of a session. You should see a &quot;Secure&quot; </span>
+</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a><span class="sb">            and &quot;HttpOnly&quot; cookie set for this page, and when you enter </span>
+</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a><span class="sb">            a word it will be stored with the session. If you delete the </span>
+</span><span id="__span-11-45"><a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="sb">            cookie, the session information and the word you entered </span>
+</span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="sb">            will be deleted.</span>
+</span><span id="__span-11-47"><a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="sb">          &lt;/p&gt;</span>
+</span><span id="__span-11-48"><a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="sb">        &lt;form action=&quot;/&quot; method=&quot;POST&quot;&gt;</span>
+</span><span id="__span-11-49"><a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a><span class="sb">          &lt;input type=&quot;text&quot; name=&quot;anyword&quot;&gt;</span>
+</span><span id="__span-11-50"><a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="sb">          &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;</span>
+</span><span id="__span-11-51"><a id="__codelineno-11-51" name="__codelineno-11-51" href="#__codelineno-11-51"></a><span class="sb">        &lt;/form&gt; </span>
+</span><span id="__span-11-52"><a id="__codelineno-11-52" name="__codelineno-11-52" href="#__codelineno-11-52"></a><span class="sb">        &lt;br&gt;`</span>
+</span><span id="__span-11-53"><a id="__codelineno-11-53" name="__codelineno-11-53" href="#__codelineno-11-53"></a><span class="w">    </span><span class="p">);</span>
+</span><span id="__span-11-54"><a id="__codelineno-11-54" name="__codelineno-11-54" href="#__codelineno-11-54"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;Entered word: &lt;b&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">anyword</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;no word entered&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;&lt;/b&gt;&#39;</span><span class="p">);</span>
+</span><span id="__span-11-55"><a id="__codelineno-11-55" name="__codelineno-11-55" href="#__codelineno-11-55"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;/div&gt;&lt;/body&gt; &lt;/html&gt;&#39;</span><span class="p">)</span>
+</span><span id="__span-11-56"><a id="__codelineno-11-56" name="__codelineno-11-56" href="#__codelineno-11-56"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">send</span><span class="p">();</span>
+</span><span id="__span-11-57"><a id="__codelineno-11-57" name="__codelineno-11-57" href="#__codelineno-11-57"></a><span class="w">  </span><span class="p">})</span>
+</span><span id="__span-11-58"><a id="__codelineno-11-58" name="__codelineno-11-58" href="#__codelineno-11-58"></a><span class="w">  </span><span class="p">.</span><span class="nx">post</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-59"><a id="__codelineno-11-59" name="__codelineno-11-59" href="#__codelineno-11-59"></a><span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">anyword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">anyword</span><span class="p">;</span>
+</span><span id="__span-11-60"><a id="__codelineno-11-60" name="__codelineno-11-60" href="#__codelineno-11-60"></a><span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">302</span><span class="p">).</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+</span><span id="__span-11-61"><a id="__codelineno-11-61" name="__codelineno-11-61" href="#__codelineno-11-61"></a><span class="w">  </span><span class="p">})</span>
+</span><span id="__span-11-62"><a id="__codelineno-11-62" name="__codelineno-11-62" href="#__codelineno-11-62"></a>
+</span><span id="__span-11-63"><a id="__codelineno-11-63" name="__codelineno-11-63" href="#__codelineno-11-63"></a><span class="kd">let</span><span class="w"> </span><span class="nx">keyDirectory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">LOCAL_KEY_DIR</span><span class="p">;</span>
+</span><span id="__span-11-64"><a id="__codelineno-11-64" name="__codelineno-11-64" href="#__codelineno-11-64"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">RUNTIME_ENV</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;production&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-65"><a id="__codelineno-11-65" name="__codelineno-11-65" href="#__codelineno-11-65"></a><span class="w">  </span><span class="nx">keyDirectory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/home/webapp/appCert/&#39;</span><span class="p">;</span>
+</span><span id="__span-11-66"><a id="__codelineno-11-66" name="__codelineno-11-66" href="#__codelineno-11-66"></a><span class="p">}</span><span class="w"> </span>
+</span><span id="__span-11-67"><a id="__codelineno-11-67" name="__codelineno-11-67" href="#__codelineno-11-67"></a>
+</span><span id="__span-11-68"><a id="__codelineno-11-68" name="__codelineno-11-68" href="#__codelineno-11-68"></a><span class="kd">const</span><span class="w"> </span><span class="nx">appKeyName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">APP_KEY_FILE</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;app1.key&#39;</span><span class="p">;</span>
+</span><span id="__span-11-69"><a id="__codelineno-11-69" name="__codelineno-11-69" href="#__codelineno-11-69"></a><span class="kd">const</span><span class="w"> </span><span class="nx">appCertName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">APP_CERT_FILE</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;app1.crt&#39;</span><span class="p">;</span>
+</span><span id="__span-11-70"><a id="__codelineno-11-70" name="__codelineno-11-70" href="#__codelineno-11-70"></a><span class="kd">const</span><span class="w"> </span><span class="nx">httpsOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-71"><a id="__codelineno-11-71" name="__codelineno-11-71" href="#__codelineno-11-71"></a><span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">keyDirectory</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">appKeyName</span><span class="p">),</span>
+</span><span id="__span-11-72"><a id="__codelineno-11-72" name="__codelineno-11-72" href="#__codelineno-11-72"></a><span class="w">  </span><span class="nx">cert</span><span class="o">:</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">keyDirectory</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">appCertName</span><span class="p">),</span>
+</span><span id="__span-11-73"><a id="__codelineno-11-73" name="__codelineno-11-73" href="#__codelineno-11-73"></a><span class="w">  </span><span class="nx">passphrase</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PKEY_PASSPHRASE</span><span class="w"> </span>
+</span><span id="__span-11-74"><a id="__codelineno-11-74" name="__codelineno-11-74" href="#__codelineno-11-74"></a><span class="p">}</span>
+</span><span id="__span-11-75"><a id="__codelineno-11-75" name="__codelineno-11-75" href="#__codelineno-11-75"></a>
+</span><span id="__span-11-76"><a id="__codelineno-11-76" name="__codelineno-11-76" href="#__codelineno-11-76"></a><span class="kd">const</span><span class="w"> </span><span class="nx">httpsServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">https</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">httpsOptions</span><span class="p">,</span><span class="w"> </span><span class="nx">app</span><span class="p">)</span>
+</span><span id="__span-11-77"><a id="__codelineno-11-77" name="__codelineno-11-77" href="#__codelineno-11-77"></a><span class="w">  </span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">securePort</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-78"><a id="__codelineno-11-78" name="__codelineno-11-78" href="#__codelineno-11-78"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;https server started on port &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+</span><span id="__span-11-79"><a id="__codelineno-11-79" name="__codelineno-11-79" href="#__codelineno-11-79"></a><span class="w">     </span><span class="nx">httpsServer</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39; running in &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">RUNTIME_ENV</span><span class="p">);</span>
+</span><span id="__span-11-80"><a id="__codelineno-11-80" name="__codelineno-11-80" href="#__codelineno-11-80"></a><span class="w">  </span><span class="p">})</span>
+</span></code></pre></div></p>
+<p>Test locally by using:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$ node app.js
+</span></code></pre></div>
+And you should see the app running https://localhost:3030 (note the <strong>https</strong>)</p>
+<h2 id="initialize-and-deploy-on-beanstalk">Initialize and deploy on Beanstalk</h2>
+<h3 id="initialize-the-application">Initialize the application</h3>
+<p>We will be using the <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html">Elastic Beanstalk command line</a>. Our next step is to initialize the application with <code>eb init</code> in the project root. The <code>eb init</code> command will ask several questions to setup the application, to include setting up your access and secret keys. Make sure that you are selecting the correct information (region, Node.js version, etc.)</p>
+<p>Here is an example run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$<span class="w"> </span>eb<span class="w"> </span>init
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Select<span class="w"> </span>a<span class="w"> </span>default<span class="w"> </span>region
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span>us-east-1<span class="w"> </span>:<span class="w"> </span>US<span class="w"> </span>East<span class="w"> </span><span class="o">(</span>N.<span class="w"> </span>Virginia<span class="o">)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span>us-west-1<span class="w"> </span>:<span class="w"> </span>US<span class="w"> </span>West<span class="w"> </span><span class="o">(</span>N.<span class="w"> </span>California<span class="o">)</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span>us-west-2<span class="w"> </span>:<span class="w"> </span>US<span class="w"> </span>West<span class="w"> </span><span class="o">(</span>Oregon<span class="o">)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>...<span class="w"> </span><span class="o">(</span>many<span class="w"> </span>regions<span class="w"> </span>omitted<span class="o">)</span><span class="w"> </span>...
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span><span class="m">1</span><span class="o">)</span>:<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Select<span class="w"> </span>an<span class="w"> </span>application<span class="w"> </span>to<span class="w"> </span>use
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span>test-app-1<span class="w"> </span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>Create<span class="w"> </span>new<span class="w"> </span>Application<span class="w"> </span><span class="o">]</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span><span class="m">2</span><span class="o">)</span>:<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>Enter<span class="w"> </span>Application<span class="w"> </span>Name
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span><span class="s2">&quot;eb-testing-1&quot;</span><span class="o">)</span>:<span class="w"> </span>eb-testing-app-1
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>Application<span class="w"> </span>eb-testing-app-1<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>created.
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>It<span class="w"> </span>appears<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>using<span class="w"> </span>Node.js.<span class="w"> </span>Is<span class="w"> </span>this<span class="w"> </span>correct?
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="o">(</span>Y/n<span class="o">)</span>:
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>Select<span class="w"> </span>a<span class="w"> </span>platform<span class="w"> </span>branch.
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span>Node.js<span class="w"> </span><span class="m">18</span><span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>64bit<span class="w"> </span>Amazon<span class="w"> </span>Linux<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span>Node.js<span class="w"> </span><span class="m">16</span><span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>64bit<span class="w"> </span>Amazon<span class="w"> </span>Linux<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span>Node.js<span class="w"> </span><span class="m">14</span><span class="w"> </span>running<span class="w"> </span>on<span class="w"> </span>64bit<span class="w"> </span>Amazon<span class="w"> </span>Linux<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span><span class="m">1</span><span class="o">)</span>:<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>Do<span class="w"> </span>you<span class="w"> </span>wish<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span><span class="w"> </span>with<span class="w"> </span>CodeCommit?<span class="w"> </span><span class="o">(</span>Y/n<span class="o">)</span>:<span class="w"> </span>n
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span><span class="nb">set</span><span class="w"> </span>up<span class="w"> </span>SSH<span class="w"> </span><span class="k">for</span><span class="w"> </span>your<span class="w"> </span>instances?<span class="w"> </span><span class="o">(</span>Y/n<span class="o">)</span>:<span class="w"> </span>y
+</span></code></pre></div>
+<p>You can also run the <code>eb init</code> command with arguments to answer some or all of the questions:
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>eb<span class="w"> </span>init<span class="w"> </span>-r<span class="w"> </span>us-west-2<span class="w"> </span>-p<span class="w"> </span>node.js<span class="w"> </span>eb-testing-app-1<span class="w"> </span>
+</span></code></pre></div></p>
+<h3 id="configure-your-deployment">Configure your deployment</h3>
+<p>We will be using several files to configure the Beanstalk environment. To be specific, and looking at the directory tree again, we'll be using these files for customization:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>.
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>├──<span class="w"> </span>.ebextensions
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>│<span class="w">   </span>├──<span class="w"> </span>options.config
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>│<span class="w">   </span>├──<span class="w"> </span>sec-group.config
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>│<span class="w">   </span>└──<span class="w"> </span>ssl-files.config
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>...
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>├──<span class="w"> </span>.platform
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>│<span class="w">   </span>└──<span class="w"> </span>nginx
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>│<span class="w">       </span>├──<span class="w"> </span>conf.d
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>│<span class="w">       </span>│<span class="w">   </span>└──<span class="w"> </span>https.conf
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>│<span class="w">       </span>└──<span class="w"> </span>nginx.conf
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>...
+</span></code></pre></div>
+<p>At your project root, create the directories for the configuration files:
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$<span class="w"> </span>mkdir<span class="w"> </span>.ebextensions
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>.platform/nginx/conf.d
+</span></code></pre></div></p>
+<p>Now we will go through the process of creating each file that will be used for deployment.</p>
+<h4 id="create-the-ebextensionsoptionsconfig-file">Create the <code>.ebextensions/options.config</code> file</h4>
+<p>For the <code>options.config</code> file, you'll need to add environment variables. Specifically:
+1. The port number that your app will be running on.
+1. The pass phrase for the application key file (the one from the <code>pass_phrase.txt</code> file above).
+1. Set the <code>NODE_ENV</code> to <code>production</code>. Although this is a dev environment, this helps separate local development (dev) and running on Beanstalk (prod)</p>
+<p>Here is the <code>.ebextensions/options.config</code> file:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">option_settings</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">aws:elasticbeanstalk:application:environment</span><span class="p">:</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="nt">PORT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span><span class="nt">PKEY_PASSPHRASE</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&lt;pass_phrase_for_private_key&gt;&#39;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="nt">NODE_ENV</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;production&#39;</span>
+</span></code></pre></div></p>
+<h4 id="create-the-ebextensionsssl-filesconfig-file">Create the <code>.ebextensions/ssl-files.config</code> file</h4>
+<p>This file instructs Beanstalk to create the SSL key and cert files on the instance that will be used by the Nginx reverse proxy and your application. For the template below, you will need to use the self-signed keys and certificates that you created to replace everything that is between the <code>-----BEGIN ...</code> and <code>-----END ...</code>.</p>
+<p>The <strong>web server</strong> key and cert will be created in the directory <code>/etc/pki/tls/certs/</code> and owned by <code>root</code>. The <strong>application</strong> key and cert will be created in the directory <code>/home/webapp/appCert/</code> and owned by the user <code>webapp</code>. Both the keys and certificates are set to read only only by the owner (i.e., root or webapp).</p>
+<p><strong>Alignment is very important and you have to use only spaces, not tabs.</strong></p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># location: .ebextensions/ssl-files.config</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nt">files</span><span class="p">:</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="nt">/etc/pki/tls/certs/server.crt</span><span class="p">:</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000400&quot;</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">      </span><span class="no">-----BEGIN CERTIFICATE-----</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">      </span><span class="no">ASASFWEASEF                                         sdfasdf08080</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">      </span><span class="no">ASASFWEASEF     WEB SERVER CERTIFICATE FILE HERE    sdfasdf08080</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">      </span><span class="no">ASASFWEASEF                                         sdfasdf08080</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfa==</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">      </span><span class="no">-----END CERTIFICATE-----</span>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">  </span><span class="nt">/etc/pki/tls/certs/server.key</span><span class="p">:</span>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000400&quot;</span>
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">      </span><span class="no">-----BEGIN PRIVATE KEY-----</span>
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">      </span><span class="no">ASASFWEASEF                                         sdfasdf08080</span>
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">      </span><span class="no">ASASFWEASEF    WEB SERVER PRIVATE KEY FILE HERE     sdfasdf08080</span>
+</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="w">      </span><span class="no">ASASFWEASEF                                         sdfasdf08080</span>
+</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfa==</span>
+</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">      </span><span class="no">-----END PRIVATE KEY-----</span>
+</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a>
+</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="w">  </span><span class="nt">/home/webapp/appCert/app1.crt</span><span class="p">:</span>
+</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000400&quot;</span>
+</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webapp</span>
+</span><span id="__span-18-36"><a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webapp</span><span class="w"> </span>
+</span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="w">      </span><span class="no">-----BEGIN CERTIFICATE-----</span>
+</span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">      </span><span class="no">ASASFWEASEF                                          dfasdf08080</span>
+</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a><span class="w">      </span><span class="no">ASASFWEASEF     APPLICATION CERTIFICATE FILE HERE    dfasdf08080</span>
+</span><span id="__span-18-42"><a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="w">      </span><span class="no">ASASFWEASEF                                          dfasdf08080</span>
+</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfa==</span>
+</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a><span class="w">      </span><span class="no">-----END CERTIFICATE-----</span>
+</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a>
+</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="w">  </span><span class="nt">/home/webapp/appCert/app1.key</span><span class="p">:</span>
+</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;000400&quot;</span>
+</span><span id="__span-18-49"><a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webapp</span>
+</span><span id="__span-18-50"><a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webapp</span><span class="w"> </span>
+</span><span id="__span-18-51"><a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a><span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-18-52"><a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a><span class="w">      </span><span class="no">-----BEGIN ENCRYPTED PRIVATE KEY-----</span>
+</span><span id="__span-18-53"><a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-54"><a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a><span class="w">      </span><span class="no">ASASFWEASEF                                          dfasdf08080</span>
+</span><span id="__span-18-55"><a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a><span class="w">      </span><span class="no">ASASFWEASEF    APPLICATION PRIVATE KEY FILE HERE     dfasdf08080</span>
+</span><span id="__span-18-56"><a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a><span class="w">      </span><span class="no">ASASFWEASEF                                          dfasdf08080</span>
+</span><span id="__span-18-57"><a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfaASDF12508125asdfasdf082531808asdfasdf08080</span>
+</span><span id="__span-18-58"><a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a><span class="w">      </span><span class="no">ASASFWEASEF124508asdfa==</span>
+</span><span id="__span-18-59"><a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a><span class="w">      </span><span class="no">-----END ENCRYPTED PRIVATE KEY-----</span>
+</span></code></pre></div>
+<h4 id="create-the-ebextensionssec-groupconfig-file">Create the <code>.ebextensions/sec-group.config</code> file</h4>
+<p>The <code>.ebextensions/sec-group.config</code> file is used to open port 443 on the instance, update the <code>CidrIp</code> to restrict access to a specific IP or CIDR block:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># location: .ebextensions/sec-group.config </span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nt">Resources</span><span class="p">:</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">sslSecurityGroupIngress</span><span class="p">:</span><span class="w"> </span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS::EC2::SecurityGroupIngress</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nt">Properties</span><span class="p">:</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">      </span><span class="nt">GroupId</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="s">&quot;Fn::GetAtt&quot;</span><span class="nt"> </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;AWSEBSecurityGroup&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;GroupId&quot;</span><span class="p p-Indicator">]}</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">      </span><span class="nt">IpProtocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">      </span><span class="nt">ToPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">      </span><span class="nt">FromPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">      </span><span class="nt">CidrIp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0/0</span>
+</span></code></pre></div>
+<h4 id="create-the-platformnginxconfdhttpsconf-file">Create the <code>.platform/nginx/conf.d/https.conf</code> file</h4>
+<p><strong>A note about the https configuration</strong></p>
+<p>The configurations templates that I am using are found in the official AWS Elastic Beanstalk documentation: <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/https-singleinstance.html">Configuring your application to terminate HTTPS connections at the instance</a>. The config file to setup https on a single instance will need the file location, syntax, and the <code>listen</code> line to be updated, which I found on the re:Post article <a href="https://repost.aws/knowledge-center/elastic-beanstalk-ssl-configuration">How do I configure an SSL certificate for an application running in an Elastic Beanstalk environment?</a> in the section <strong>Terminate HTTPS at instance level</strong>. That same article also does a great job of explaining the move from AL1 to AL2.</p>
+<p><strong>NOTE:</strong> There is a difference between using Amazon Linux 1 and Amazon Linux 2. When configuring the Nginx reverse proxy, the location for files that are used to extend the Nginx configuration has moved to <code>.platform/nginx/conf.d/</code>. If you want to completely replace the Nginx configuration then you use <code>.platform/nginx/nginx.conf</code> (which we will be doing). More details can be found in the section <strong>"Configuring nginx"</strong> in <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/platforms-linux-extend.html">Extending Elastic Beanstalk Linux platforms</a>, and also <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.migration-al.html">Migrating your Elastic Beanstalk Linux application to Amazon Linux 2</a>.</p>
+<p>We configure Nginx to listen on port 443, by creating the <code>.platform/nginx/conf.d/https.conf</code> with the config info below. <code>proxy_pass</code> has to point to <code>https</code> and we need to use the port number that we used for <code>PORT</code> in the <code>options.config</code> file we created above. This configures Beanstalk to use port <strong>5000</strong> to run your application. In your application you do not need to hard-code the port number, you can use, for example: <code>process.env.PORT || 3030</code>.</p>
+<p>Here is the entire <code>.platform/nginx/conf.d/https.conf</code> you should use:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># HTTPS server
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a># location: .platform/nginx/conf.d/https.conf
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>server {
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  listen       443 ssl;
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>  server_name  localhost;
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>  ssl_certificate      /etc/pki/tls/certs/server.crt;
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>  ssl_certificate_key  /etc/pki/tls/certs/server.key;
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>  ssl_session_timeout  5m;
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>  ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>  ssl_prefer_server_ciphers   on;
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>  location / {
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>          ## proxy_pass has to point to https and the port number used for PORT in the options.conf file
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>          proxy_pass  https://localhost:5000;
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>          proxy_set_header   Connection &quot;&quot;;
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>          proxy_http_version 1.1;
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>          proxy_set_header        Host            $host;
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>          proxy_set_header        X-Real-IP       $remote_addr;
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>          proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>          proxy_set_header        X-Forwarded-Proto https;
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>  }
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>}
+</span></code></pre></div>
+<h4 id="create-the-platformnginxnginxconf-file">Create the <code>.platform/nginx/nginx.conf</code> file</h4>
+<p>For the redirect to work after initial deployment, edit the main Nginx conf file (<code>.platform/nginx/nginx.conf</code>). I added an https redirect from port 80. Specifically, I added this to the server listening on port 80:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>        # Permanently redirecting to https
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>        return 301 https://$host$request_uri;
+</span></code></pre></div>
+<p>This is has resulted in a predicable environment launching, with the redirect to https working. Here is the entire <code>.platform/nginx/nginx.conf</code> file:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a># Elastic Beanstalk Nginx Configuration File
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a># Added redirect
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a># location .platform/nginx/nginx.conf
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>user                    nginx;
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>error_log               /var/log/nginx/error.log warn;
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>pid                     /var/run/nginx.pid;
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>worker_processes        auto;
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>worker_rlimit_nofile    31486;
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>events {
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    worker_connections  1024;
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>}
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>http {
+</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>    server_tokens off;
+</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>
+</span><span id="__span-22-18"><a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>    include       /etc/nginx/mime.types;
+</span><span id="__span-22-19"><a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>    default_type  application/octet-stream;
+</span><span id="__span-22-20"><a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>
+</span><span id="__span-22-21"><a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+</span><span id="__span-22-22"><a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+</span><span id="__span-22-23"><a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+</span><span id="__span-22-24"><a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>
+</span><span id="__span-22-25"><a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>    include       conf.d/*.conf;
+</span><span id="__span-22-26"><a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>
+</span><span id="__span-22-27"><a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>    map $http_upgrade $connection_upgrade {
+</span><span id="__span-22-28"><a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>        default     &quot;upgrade&quot;;
+</span><span id="__span-22-29"><a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>    }
+</span><span id="__span-22-30"><a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>
+</span><span id="__span-22-31"><a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>    server {
+</span><span id="__span-22-32"><a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>        listen        80 default_server;
+</span><span id="__span-22-33"><a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>        access_log    /var/log/nginx/access.log main;
+</span><span id="__span-22-34"><a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>
+</span><span id="__span-22-35"><a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>        client_header_timeout 60;
+</span><span id="__span-22-36"><a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>        client_body_timeout   60;
+</span><span id="__span-22-37"><a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>        keepalive_timeout     60;
+</span><span id="__span-22-38"><a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>        gzip                  off;
+</span><span id="__span-22-39"><a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>        gzip_comp_level       4;
+</span><span id="__span-22-40"><a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>        gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+</span><span id="__span-22-41"><a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a>
+</span><span id="__span-22-42"><a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a>        # Include the Elastic Beanstalk generated locations
+</span><span id="__span-22-43"><a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a>        include conf.d/elasticbeanstalk/*.conf;
+</span><span id="__span-22-44"><a id="__codelineno-22-44" name="__codelineno-22-44" href="#__codelineno-22-44"></a>
+</span><span id="__span-22-45"><a id="__codelineno-22-45" name="__codelineno-22-45" href="#__codelineno-22-45"></a>        # Permanently redirecting to https
+</span><span id="__span-22-46"><a id="__codelineno-22-46" name="__codelineno-22-46" href="#__codelineno-22-46"></a>        return 301 https://$host$request_uri;
+</span><span id="__span-22-47"><a id="__codelineno-22-47" name="__codelineno-22-47" href="#__codelineno-22-47"></a>    }
+</span><span id="__span-22-48"><a id="__codelineno-22-48" name="__codelineno-22-48" href="#__codelineno-22-48"></a>}
+</span></code></pre></div>
+<h4 id="verify-config-files">Verify config files</h4>
+<p>You should now verify that you have created each of the files above, here are the files you should have created:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>.ebextensions/options.config
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>.ebextensions/sec-group.config
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>.ebextensions/ssl-files.config
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>.platform/nginx/conf.d/https.conf
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>.platform/nginx/nginx.conf
+</span></code></pre></div>
+<h3 id="create-the-beanstalk-environment-this-deploys-as-well">Create the Beanstalk environment (this deploys as well)</h3>
+<p>The next steps depend on the steps above, to include <code>eb init</code>. We'll be using the <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-create.html">eb create command</a>. This command will deploy a single instance, without a load balancer, and we will use spot instances with the specified instance types:
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>eb<span class="w"> </span>create<span class="w"> </span>--single<span class="w"> </span>--enable-spot<span class="w"> </span>--instance-types<span class="w"> </span>t3.nano,t3.micro<span class="w"> </span>myEnvOnEb<span class="w"> </span>
+</span></code></pre></div></p>
+<p>Once the deployment is finished you can go to the Elastic Beanstalk dashboard and click on the "Go to environment" link, or click on the Domain, which will look something like this:</p>
+<p><strong>myEnvOnEb.eba-sadf23ds.us-west-2.elasticbeanstalk.com</strong></p>
+<p>When viewing in your browser, it should not matter if you use <code>http://</code> or <code>https://</code> for the url, you should be redirected to the https page. As we are using a self-signed certificate, you will see a warning that looks like this:</p>
+<p><img alt="Cert warning" src="https://raw.githubusercontent.com/veloduff/deploy-secure-nodejs-env/main/_images/eb_launch_cert_warning.png" /></p>
+<p>Click on "Advanced" and then click on the message that says something similar to this "Proceed to myEnvOnEb.eba-srwf23ds.us-west-2.elasticbeanstalk.com (unsafe)".</p>
+<p>You should see your app running on https, and you can check the certificate by clicking on the "Not Secure" button next to the URL.</p>
+<p><img alt="Final result" src="https://raw.githubusercontent.com/veloduff/deploy-secure-nodejs-env/main/_images/eb_final_result.png" /></p>
+<h4 id="check-that-the-session-is-secure-and-using-httponly">Check that the session is Secure and using HttpOnly</h4>
+<p>Use Chrome to load the page, and go to "View" -&gt; "Developer" -&gt; "Developer Tools". And then click on the "Application" tab, and in the "Storage" section, you should see "Cookies" and under that you should see the cookie that was set by the Node.js application. Both "HttpOnly" and "Secure" should be checked:</p>
+<p><img alt="View cookie" src="https://raw.githubusercontent.com/veloduff/deploy-secure-nodejs-env/main/_images/cookie_status.png" /></p>
+<h3 id="remove-and-reset">Remove and reset</h3>
+<p>You can go to the AWS Console to see which environments are running and remove them there. Or to remove an application environment (and applications) with the CLI, use <code>eb list</code> to show your environments, and <code>eb terminate</code> to remove them.</p>
+<p>This terminates one env, but will leave the application:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="o">[</span>~/repos/app-testing<span class="o">]</span>$<span class="w"> </span>eb<span class="w"> </span>terminate<span class="w"> </span>&lt;env_name&gt;
+</span></code></pre></div>
+<p>This terminates all environments and deletes the application:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="o">[</span>~/repos/app-testing<span class="o">]</span>$<span class="w"> </span>eb<span class="w"> </span>terminate<span class="w"> </span>--all
+</span></code></pre></div>
+<p>If you need to reset your environment, you can remove all the files and directories that were created by the setup command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>rm<span class="w"> </span>-ri<span class="w"> </span>.ebignore<span class="w"> </span>.gitignore<span class="w"> </span>.platform<span class="w"> </span>.ebextensions<span class="w"> </span>.elasticbeanstalk<span class="w"> </span>.env<span class="w"> </span>&lt;certificate_directory&gt;
+</span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>We're done! We have setup a secure, inexpensive Node.js development environment on AWS Elastic Beanstalk. This environment (if running 24/7), would cost about $6/month (using today's EC2 Spot prices). You now have the option of scaling to a production environment that would include a Load Balancer and official (not self-signed) SSL certificates. The setup for using SSL and redirecting to https is much easier when using a Load Balancer, as that is one of the functions that a Load Balancer was designed to do (but will cost more).</p>
+<p>For just general tips for launching a Node.js application on Beanstalk, but not specific to https, have a look at: <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html">Node.js app on Beanstalk</a></p>
+<h2 id="additional-configuration">Additional configuration</h2>
+<p>In the <code>ebFileTemplates.py</code> file you will find the templates that are used to create each of the files. You can customize those as needed. For example, to add <strong>Managed updates</strong> and to enable access to static files in the <code>/public</code> directory, add this to <code>.ebextensions/options.config</code>: </p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nt">option_settings</span><span class="p">:</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nt">aws:elasticbeanstalk:managedactions</span><span class="p">:</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="nt">ManagedActionsEnabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="nt">PreferredStartTime</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mon:10:00&quot;</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">  </span><span class="nt">aws:elasticbeanstalk:managedactions:platformupdate</span><span class="p">:</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">    </span><span class="nt">UpdateLevel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patch</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">    </span><span class="nt">InstanceRefreshEnabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">  </span><span class="nt">aws:elasticbeanstalk:environment:proxy:staticfiles</span><span class="p">:</span>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="nt">/public</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/public</span>
+</span></code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Apache License - Mark Duffield 2023
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.path", "navigation.indexes", "content.code.copy"], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
